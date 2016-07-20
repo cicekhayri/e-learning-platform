@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import include, url
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
@@ -25,5 +27,9 @@ urlpatterns = [
     url(r'^accounts/logout/$', auth_views.logout, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^course/', include('courses.urls')),
+    url(r'^students/', include('students.urls')),
     url(r'^$', CourseListView.as_view(), name='course_list'),
 ]
+
+urlpatterns += static(settings.MEDIA_URL,
+                    document_root=settings.MEDIA_ROOT)
